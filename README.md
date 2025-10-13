@@ -1,4 +1,4 @@
-# Monitoring a Containerized URL Shortener Webservice
+# DevShop: A DevOps-Driven E-commerce Platform
 
 ## 👥 Team Members
 - Ahmed Abd Elmohsen - Team Leader
@@ -6,6 +6,7 @@
 - George Medhat 
 - Mohamed Mahmoud 
 - Mohamed khaled 
+- Abdelrhman Hazem
 
 ---
 ## Google drive
@@ -14,48 +15,48 @@
 
 ---
 ## 📌 Project Idea
-A simple **URL shortener webservice** that:
-- Shortens long URLs into short codes.
-- Redirects short codes to their original URLs.
-- Exposes **custom Prometheus metrics** for monitoring.
-- Uses **Grafana dashboards** for visualization.
+A cloud-based **E-commerce website** that lets users browse products, add them to a cart, and place orders securely.
 
-The project is fully containerized and runs locally using **Docker Compose**.
+It’s built using **DevOps tools** for automation and scalability:
+- **Docker** for containerization.
+- **Kubernetes** for orchestration.
+- **Terraform and AWS** for infrastructure.
+- **Ansible** for configuration management.
+- **Prometheus and Grafana** for monitoring.
+
+The goal is to apply DevOps culture to build, deploy, and monitor a scalable online store.
 
 ---
-
 ## 🗂️ Project Plan
 
 ### **Week 1 – Build & Containerize**
-- Develop the webservice with two endpoints:
-  - `POST /shorten` → Accepts a long URL and returns a short code.
-  - `GET /<short_code>` → Redirects to the original URL.
-- Store mappings in SQLite.
-- Write Dockerfile.
-- Initial docker-compose.yml to run the service.
+- [x] Develop application modules
+- [ ] Create Dockerfile for each service
+- [ ] Write docker-compose.yml for local development
+- [ ] Implement CI pipeline (GitHub Actions)
 
-### **Week 2 – Instrument with Prometheus Metrics**
-- Add custom metrics:
-  - Counter: number of URLs shortened.
-  - Counter: number of successful redirects.
-  - Counter: failed lookups (404).
-  - Histogram: request latency.
-- prometheus.yml configuration.
-- Integrate Prometheus into docker-compose.yml.
+### **Week 2 – Provision Infrastructure**
+- [ ] Define Infrastructure
+- [ ] Write Terraform configuration files
 
-### **Week 3 – Visualization with Grafana**
-- Add Grafana to docker-compose.yml.
-- Connect Grafana to Prometheus.
-- Create a dashboard:
-  - URL creation & redirect rates over time.
-  - Total shortened links (single stat).
-  - 95th percentile latency.
-  - 404 error rate.
+### **Week 3 – Configure & Deploy**
+- [ ] Create Kubernetes manifests
+- [ ] Write Ansible playbooks
 
-### **Week 4 – Alerting & Persistence**
-- Configure Grafana alerts (e.g., high latency, 404 spikes).
-- Add Docker volumes for SQLite, Prometheus, Grafana.
-- Verify data persistence after restart.
-- Final testing + documentation.
+### **Week 4 – Monitor & Automate**
+- [ ] Monitoring & Logging
+- [ ] CI/CD Enhancements
+
+---
+## 📝 Individual Roles and Responsibilities
+
+| Member              | Role & Tasks              |
+|---------------------|---------------------------|
+| George Medhat       | Code Development          |
+| Eslam Nasser        | Docker and CI/CD Pipeline |
+| Abdelrhman Hazem    | Docker and CI/CD Pipeline |
+| Ahmed Abd Elmohsen  | k8's and monitoring       |
+| Mohamed Mahmoud     | k8's and monitoring       |
+| Mohamed khaled      | Ansible and Cloud         |
 
 ---
