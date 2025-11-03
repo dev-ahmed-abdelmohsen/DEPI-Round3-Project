@@ -1,0 +1,44 @@
+# Global .gitignore
+
+# General
+.DS_Store
+.idea/
+.vscode/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Backend (Laravel)
+/backend/node_modules
+/backend/vendor
+/backend/public/build
+/backend/public/hot
+/backend/public/storage
+/backend/storage/*.key
+/backend/.env
+/backend/.env.backup
+/backend/.env.production
+/backend/.phpunit.result.cache
+/backend/Homestead.json
+/backend/Homestead.yaml
+/backend/auth.json
+/backend/.fleet
+
+# Frontend Admin
+/frontend-admin/node_modules
+/frontend-admin/build
+/frontend-admin/coverage
+/frontend-admin/.eslintcache
+/frontend-admin/.env.local
+/frontend-admin/.env.development.local
+/frontend-admin/.env.test.local
+/frontend-admin/.env.production.local
+/frontend-admin/package-lock.json
+/frontend-admin/yarn.lock
+
+# Frontend User
+/frontend-user/node_modules
+/frontend-user/dist
+/frontend-user/dist-ssr
+/frontend-user/*.local

@@ -17,6 +17,13 @@
 ## 📌 Project Idea
 A cloud-based **E-commerce website** that lets users browse products, add them to a cart, and place orders securely.
 
+### 🚀 Core Features
+- **Product Catalog:** Browse and search for products.
+- **Shopping Cart:** Add and manage items in a persistent cart.
+- **Secure Checkout:** Place orders securely.
+- **User Authentication:** Customer accounts and profiles.
+
+### 🛠️ Tools & Technologies
 It’s built using **DevOps tools** for automation and scalability:
 - **Docker** for containerization.
 - **Kubernetes** for orchestration.
