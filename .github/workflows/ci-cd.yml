@@ -39,6 +39,9 @@ jobs:
           npm ci
 
       - name: Run Backend Tests
+        env:
+          N8N_UPLOADS_URL: "http://localhost:5678/webhook/test"
+          PORT: 3001
         run: |
           cd backend
           npm test

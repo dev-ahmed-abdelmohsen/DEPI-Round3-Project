@@ -1,6 +1,9 @@
 
 ```
 SocialDev
+├─ .github
+│  └─ workflows
+│     └─ ci-cd.yml
 ├─ backend
 │  ├─ .dockerignore
 │  ├─ .env
@@ -9,6 +12,9 @@ SocialDev
 │  ├─ package.json
 │  └─ src
 │     └─ server.js
+├─ cicd-guide.md
+├─ docker-compose.dev.yml
+├─ docker-compose.prod.yml
 ├─ docker-compose.yml
 ├─ frontend
 │  ├─ .dockerignore
@@ -99,6 +105,24 @@ SocialDev
 │  │     └─ utils.ts
 │  ├─ tailwind.config.ts
 │  └─ tsconfig.json
+├─ k8s
+│  ├─ Templates
+│  ├─ backend-deployment.yaml
+│  ├─ backend-service.yaml
+│  ├─ backend-servicemonitor.yaml
+│  ├─ frontend-deployment.yaml
+│  ├─ frontend-service.yaml
+│  ├─ grafana-dashboard-cm.yaml
+│  ├─ ingress.yaml
+│  ├─ monitoring-setup.md
+│  ├─ n8n-deployment.yaml
+│  ├─ n8n-pv.yaml
+│  ├─ n8n-pvc.yaml
+│  └─ n8n-service.yaml
+├─ monitoring
+│  ├─ grafana-dashboard.json
+│  ├─ my-values.yaml
+│  └─ prometheus.yml
 ├─ n8n-data
 │  ├─ binaryData
 │  ├─ config
@@ -112,5 +136,4 @@ SocialDev
 │  │  └─ package.json
 │  └─ ssh
 └─ Readme.md
-
 ```
