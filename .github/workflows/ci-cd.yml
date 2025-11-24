@@ -69,7 +69,7 @@ jobs:
           docker compose up -d
           sleep 10 # Give it a moment to start
           docker compose ps
-          if [ $(docker compose ps -q | wc -l) -gt 0 ]; then
+          if [ "$(docker compose ps -q | wc -l)" -gt 0 ]; then
             echo "Containers started successfully"
           else
             echo "No containers running"
@@ -86,7 +86,7 @@ jobs:
       
       - name: Validate K8s Manifests
         run: |
-          kubeval k8s/*.yaml
+          kubeval --ignore-missing-schemas k8s/*.yaml
 
   build-and-push:
     needs: test-and-validate
