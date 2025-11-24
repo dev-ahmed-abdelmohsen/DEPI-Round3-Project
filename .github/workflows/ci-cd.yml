@@ -65,17 +65,17 @@ jobs:
 
       - name: Validate Docker Compose
         run: |
-          docker-compose config
-          docker-compose up -d
+          docker compose config
+          docker compose up -d
           sleep 10 # Give it a moment to start
-          docker-compose ps
-          if [ $(docker-compose ps -q | wc -l) -gt 0 ]; then
+          docker compose ps
+          if [ $(docker compose ps -q | wc -l) -gt 0 ]; then
             echo "Containers started successfully"
           else
             echo "No containers running"
             exit 1
           fi
-          docker-compose down
+          docker compose down
 
       # --- K8s Validation ---
       - name: Install kubeval
