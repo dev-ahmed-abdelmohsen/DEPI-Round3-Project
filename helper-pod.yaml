@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: n8n-data-helper
+spec:
+  containers:
+  - name: helper
+    image: alpine
+    command: ["/bin/sh", "-c", "sleep 3600"]
+    volumeMounts:
+    - name: n8n-data
+      mountPath: /data
+  volumes:
+  - name: n8n-data
+    persistentVolumeClaim:
+      claimName: n8n-pvc

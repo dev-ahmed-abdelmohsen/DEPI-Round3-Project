@@ -1,0 +1,42 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=http://backend:3001
+    networks:
+      - my-app-network
+    restart: always
+
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - N8N_UPLOADS_URL=http://n8n:5678/webhook/cf833d7c-8ef3-453e-b04c-f69440e4f7c7
+    networks:
+      - my-app-network
+    depends_on:
+      - n8n
+    restart: always
+
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: socialdev-n8n-prod
+    ports:
+      - "5678:5678"
+    environment:
+      - WEBHOOK_URL=http://n8n:5678/ 
+    volumes:
+      - ./n8n-data:/home/node/.n8n
+    networks:
+      - my-app-network
+    restart: always
+
+networks:
+  my-app-network:
+    driver: bridge
