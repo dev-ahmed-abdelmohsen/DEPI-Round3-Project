@@ -111,8 +111,8 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            georgemedhat/backend:latest
-            georgemedhat/backend:${{ github.sha }}
+            georgemedhat/socialdev-backend:latest
+            georgemedhat/socialdev-backend:${{ github.sha }}
 
       - name: Build and push Frontend
         uses: docker/build-push-action@v5
@@ -121,5 +121,5 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: |
-            georgemedhat/frontend:latest
-            georgemedhat/frontend:${{ github.sha }}
+            georgemedhat/socialdev-frontend:latest
+            georgemedhat/socialdev-frontend:${{ github.sha }}
