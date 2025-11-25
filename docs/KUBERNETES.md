@@ -114,36 +114,28 @@ This diagram provides a more abstract, horizontal view of the component communic
 
 ```mermaid
 flowchart LR
-    User[Browser] --> Ingress
+    User[Browser] --> Ingress;
 
-    subgraph k8s [Kubernetes Cluster]
-        %% 1. Define the Vertical Stack FIRST to lock in the layout
-        subgraph N8nStack [n8n and Data]
-            direction TB
-            N8nSvc[n8n Service] -- "persists" --> PV[Persistent Volume]
-        end
+    subgraph Kubernetes Cluster
+        Ingress -- routes to --> FrontendSvc[Frontend Service];
+        Ingress -- routes to --> BackendSvc[Backend Service];
+        Ingress -- routes to --> Grafana[Grafana UI];
 
-        %% 2. Define the Horizontal Flow
-        Ingress -- routes --> FrontendSvc[Frontend Service]
-        Ingress -- routes --> BackendSvc[Backend Service]
-        Ingress -- routes --> Grafana[Grafana UI]
-
-        FrontendSvc --> BackendSvc
-        %% Connect the flow to the TOP node of the vertical stack
-        BackendSvc --> N8nSvc
+        FrontendSvc --> BackendSvc;
         
-        %% 3. Monitoring
-        Prometheus[Prometheus] -- scrapes --> BackendSvc
-        Grafana -- queries --> Prometheus
+        %% THE UNIFIED NODE
+        %% We use HTML tags <br/> for breaks and <hr/> for a horizontal line
+        BackendSvc --> N8nUnit["<div style='font-weight:bold'>n8n Service</div><div style='font-size:90%; opacity:0.7'>(Compute)</div><hr style='margin:5px 0;'/><div style='font-weight:bold'>Persistent Volume</div><div style='font-size:90%; opacity:0.7'>(Storage)</div>"];
+
+        Prometheus[Prometheus] -- scrapes --> BackendSvc;
+        Grafana -- "queries" --> Prometheus;
     end
 
     %% Styles
     style Ingress fill:#9370DB,stroke:#333,stroke-width:2px
     style Grafana fill:#228B22,stroke:#333,stroke-width:2px
     style Prometheus fill:#FF8C00,stroke:#333,stroke-width:2px
-    style N8nSvc fill:#FF69B4,stroke:#333,stroke-width:2px
-    style PV fill:#FF69B4,stroke:#333,stroke-width:2px
     
-    %% Style the container to be transparent
-    style N8nStack fill:none,stroke:none
+    %% Style the new Unified Unit
+    style N8nUnit fill:#FF69B4,stroke:#333,stroke-width:2px,color:black,align:center
 ```
