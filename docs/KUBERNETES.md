@@ -113,18 +113,37 @@ graph TD
 This diagram provides a more abstract, horizontal view of the component communication within the Kubernetes cluster.
 
 ```mermaid
-graph LR
-    User[Browser] --> Ingress;
+flowchart LR
+    User[Browser] --> Ingress
 
-    subgraph Kubernetes Cluster
-        Ingress -- routes to --> FrontendSvc[Frontend Service];
-        Ingress -- routes to --> BackendSvc[Backend Service];
+    subgraph k8s [Kubernetes Cluster]
+        %% 1. Define the Vertical Stack FIRST to lock in the layout
+        subgraph N8nStack [n8n and Data]
+            direction TB
+            N8nSvc[n8n Service] -- "persists" --> PV[Persistent Volume]
+        end
+
+        %% 2. Define the Horizontal Flow
+        Ingress -- routes --> FrontendSvc[Frontend Service]
+        Ingress -- routes --> BackendSvc[Backend Service]
+        Ingress -- routes --> Grafana[Grafana UI]
+
+        FrontendSvc --> BackendSvc
+        %% Connect the flow to the TOP node of the vertical stack
+        BackendSvc --> N8nSvc
         
-        FrontendSvc --> BackendSvc;
-        BackendSvc --> N8nSvc[n8n Service];
-        
-        Prometheus[Prometheus] -- scrapes --> BackendSvc;
+        %% 3. Monitoring
+        Prometheus[Prometheus] -- scrapes --> BackendSvc
+        Grafana -- queries --> Prometheus
     end
 
-    style Ingress fill:#f9f,stroke:#333,stroke-width:2px
+    %% Styles
+    style Ingress fill:#9370DB,stroke:#333,stroke-width:2px
+    style Grafana fill:#228B22,stroke:#333,stroke-width:2px
+    style Prometheus fill:#FF8C00,stroke:#333,stroke-width:2px
+    style N8nSvc fill:#FF69B4,stroke:#333,stroke-width:2px
+    style PV fill:#FF69B4,stroke:#333,stroke-width:2px
+    
+    %% Style the container to be transparent
+    style N8nStack fill:none,stroke:none
 ```
