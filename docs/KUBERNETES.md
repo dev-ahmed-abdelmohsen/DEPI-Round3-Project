@@ -76,19 +76,30 @@ graph TD
         
         subgraph "Monitoring Pods"
            Prometheus(Prometheus)
+           Grafana(Grafana)
+           %% Added Grafana Pod
         end
 
-        FrontendSvc(frontend-service<br>ClusterIP)
-        BackendSvc(backend-service<br>ClusterIP)
-        N8nSvc(n8n-service<br>ClusterIP)
+        FrontendSvc(Frontend Service<br>ClusterIP)
+        BackendSvc(Backend Service<br>ClusterIP)
+        N8nSvc(n8n Service<br>ClusterIP)
+        GrafanaSvc(Grafana Service<br>ClusterIP)
+        %% Added Grafana Service
         PV(Persistent Volume)
     end
     
     User -- "socialdev.com" --> Ingress
     User -- "api.socialdev.com" --> Ingress
+    User -- "grafana.socialdev.com" --> Ingress
+    %% New: User to Ingress for Grafana
 
     Ingress -- "route: /" --> FrontendSvc
-    Ingress -- "route: /" --> BackendSvc
+    Ingress -- "route: /api" --> BackendSvc
+    %% Updated label
+    Ingress -- "route: /n8n" --> N8nSvc
+    %% Updated label
+    Ingress -- "route: /grafana" --> GrafanaSvc
+    %% New: Ingress to Grafana Service
     
     FrontendSvc --> F1
     FrontendSvc --> F2
@@ -96,16 +107,24 @@ graph TD
     BackendSvc --> B1
     BackendSvc --> B2
     
-    F1 -- "http://backend-service:3001" --> BackendSvc
-    F2 -- "http://backend-service:3001" --> BackendSvc
+    F1 -- "accesses" --> BackendSvc
+    %% Clarified label
+    F2 -- "accesses" --> BackendSvc
+    %% Clarified label
 
-    B1 -- "http://n8n-service:5678" --> N8nSvc
-    B2 -- "http://n8n-service:5678" --> N8nSvc
+    B1 -- "triggers" --> N8nSvc
+    %% Clarified label
+    B2 -- "triggers" --> N8nSvc
+    %% Clarified label
     
     N8nSvc --> N8n
     N8n -- "mount" --> PV
 
     Prometheus -- "scrapes" --> BackendSvc
+    GrafanaSvc --> Grafana
+    %% New: Grafana Service to Grafana Pod
+    Grafana -- "queries" --> Prometheus
+    %% New: Grafana Pod to Prometheus Pod
 ```
 
 ## High-Level Architecture Diagram
