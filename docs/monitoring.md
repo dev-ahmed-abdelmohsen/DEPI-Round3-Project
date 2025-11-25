@@ -17,9 +17,9 @@ When running the services using `docker-compose up`, the monitoring tools are av
     -   You can use the Prometheus UI to run ad-hoc queries on the collected metrics. For example, to see all metrics for the backend, you can query `up{job="backend"}`.
 
 -   **Grafana**: [http://localhost:3002](http://localhost:3002)
-    -   **Login**:
+    -   **Default Login**:
         -   Username: `admin`
-        -   Password: `admin` (as configured in `docker-compose.yml`)
+        -   Password: `Password123!` (as configured in `my-values.yaml`)
 
 ## Prometheus Configuration
 

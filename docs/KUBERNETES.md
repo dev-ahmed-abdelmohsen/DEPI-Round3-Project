@@ -107,3 +107,24 @@ graph TD
 
     Prometheus -- "scrapes" --> BackendSvc
 ```
+
+## High-Level Architecture Diagram
+
+This diagram provides a more abstract, horizontal view of the component communication within the Kubernetes cluster.
+
+```mermaid
+graph LR
+    User[Browser] --> Ingress;
+
+    subgraph Kubernetes Cluster
+        Ingress -- routes to --> FrontendSvc[Frontend Service];
+        Ingress -- routes to --> BackendSvc[Backend Service];
+        
+        FrontendSvc --> BackendSvc;
+        BackendSvc --> N8nSvc[n8n Service];
+        
+        Prometheus[Prometheus] -- scrapes --> BackendSvc;
+    end
+
+    style Ingress fill:#f9f,stroke:#333,stroke-width:2px
+```

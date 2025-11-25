@@ -76,8 +76,8 @@ The goal is to apply DevOps culture to build, deploy, and monitor a scalable web
 
 -   **[Frontend Service Readme](frontend/README.md)**: Instructions for setting up and running the frontend service locally.
 -   **[Backend Service Readme](backend/README.md)**: Instructions for setting up and running the backend service locally.
--   **[Docker Setup Guide](DOCKER.md)**: An overview of the Docker configuration for local development.
--   **[Kubernetes Setup Guide](KUBERNETES.md)**: An overview of the Kubernetes configuration for deployment.
+-   **[Docker Setup Guide](docs/DOCKER.md)**: An overview of the Docker configuration for local development.
+-   **[Kubernetes Setup Guide](docs/KUBERNETES.md)**: An overview of the Kubernetes configuration for deployment.
 -   **[Backend API Documentation](docs/backend-api.md)**: Detailed documentation of the backend API endpoints.
 -   **[Monitoring Guide](docs/monitoring.md)**: A guide to the project's monitoring and observability stack (Prometheus & Grafana).
 -   **[CI/CD Pipeline Guide](docs/cicd.md)**: An explanation of the Continuous Integration and Deployment pipeline.
