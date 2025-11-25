@@ -88,6 +88,12 @@ jobs:
         run: |
           kubeval --ignore-missing-schemas k8s/*.yaml
 
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   build-and-push:
     needs: test-and-validate
     runs-on: ubuntu-latest

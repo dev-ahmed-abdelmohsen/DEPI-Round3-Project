@@ -44,6 +44,9 @@ This job runs on every trigger and is responsible for ensuring the code quality,
 7.  **Kubernetes Manifest Validation**:
     -   Installs `kubeval`, a tool for validating Kubernetes configuration files.
     -   Validates all `.yaml` files in the `k8s/` directory against the Kubernetes schemas to catch syntax errors early.
+8.  **SonarCloud Scan**:
+    -   Runs a static code analysis using the official SonarCloud GitHub Action.
+    -   This step requires a `SONAR_TOKEN` to be configured as a secret in the GitHub repository. It helps in identifying code quality issues, bugs, and vulnerabilities.
 
 ### 2. `build-and-push`
 
