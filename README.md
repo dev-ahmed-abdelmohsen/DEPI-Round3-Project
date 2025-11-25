@@ -82,7 +82,10 @@ The goal is to apply DevOps culture to build, deploy, and monitor a scalable web
 -   **[Monitoring Guide](docs/monitoring.md)**: A guide to the project's monitoring and observability stack (Prometheus & Grafana).
 -   **[CI/CD Pipeline Guide](docs/cicd.md)**: An explanation of the Continuous Integration and Deployment pipeline.
 
-
-
-
 ---
+
+## 📊 SonarCloud Quality Gate
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=learnaholic-bit_DEPI-Round3-Project&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=learnaholic-bit_DEPI-Round3-Project)
+
+You can find the full analysis on [SonarCloud](https://sonarcloud.io/project/overview?id=learnaholic-bit_DEPI-Round3-Project).

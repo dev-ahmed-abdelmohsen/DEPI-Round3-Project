@@ -44,9 +44,36 @@ This job runs on every trigger and is responsible for ensuring the code quality,
 7.  **Kubernetes Manifest Validation**:
     -   Installs `kubeval`, a tool for validating Kubernetes configuration files.
     -   Validates all `.yaml` files in the `k8s/` directory against the Kubernetes schemas to catch syntax errors early.
-8.  **SonarCloud Scan**:
-    -   Runs a static code analysis using the official SonarCloud GitHub Action.
-    -   This step requires a `SONAR_TOKEN` to be configured as a secret in the GitHub repository. It helps in identifying code quality issues, bugs, and vulnerabilities.
+
+## SonarCloud Analysis
+
+In addition to the main CI/CD pipeline, there is a separate workflow for static code analysis using SonarCloud.
+
+### Workflow File
+
+The SonarCloud analysis workflow is defined in `.github/workflows/sonarcloud-analysis.yml`.
+
+### Triggers
+
+This workflow is triggered by:
+
+-   **Push**: On pushes to the `main` or `master` branches.
+-   **Pull Request**: When a pull request is opened or updated targeting the `main` or `master` branches.
+-   **Manual Dispatch**: Can be run manually from the GitHub Actions tab.
+
+### Purpose
+
+This workflow runs the SonarCloud scanner to perform static analysis on the codebase to detect bugs, vulnerabilities, and code smells. It is a non-blocking workflow, meaning it will not prevent pull requests from being merged.
+
+### Configuration
+
+For this workflow to run successfully, you need to configure the following in your GitHub repository's **Settings > Secrets and variables > Actions**:
+
+-   **Secrets**:
+    -   `SONAR_TOKEN`: A SonarCloud token with analysis permissions.
+-   **Variables**:
+    -   `SONAR_PROJECT_KEY`: The key of your project in SonarCloud.
+    -   `SONAR_ORGANIZATION`: The key of your organization in SonarCloud.
 
 ### 2. `build-and-push`
 
