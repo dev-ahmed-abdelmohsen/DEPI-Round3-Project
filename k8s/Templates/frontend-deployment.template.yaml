@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: georgemedhat/socialdev-frontend:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NEXT_PUBLIC_DOMAIN
+          value: "${DOMAIN}"
+        - name: API_BASE_URL_INTERNAL
+          value: "http://backend-service:3001"
+        - name: PROMETHEUS_URL
+          value: "http://prometheus-stack-kube-prom-prometheus:9090"
+        - name: PORT
+          value: "3000"

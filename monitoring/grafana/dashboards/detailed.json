@@ -1,0 +1,273 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 100,
+      "panels": [],
+      "title": "HTTP Metrics",
+      "type": "row"
+    },
+    {
+      "id": 2,
+      "title": "Request Rate",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 1 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total{job=~\"$job\"}[5m])) by (route, method)",
+          "legendFormat": "{{method}} {{route}}"
+        }
+      ],
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "table", "placement": "right", "calcs": ["max", "mean", "last"] } }
+    },
+    {
+      "id": 8,
+      "title": "Error Rate (4xx & 5xx)",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 1 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_requests_total{job=~\"$job\", status_code=~\"5..\"}[5m])) by (route)",
+          "legendFormat": "5xx - {{route}}"
+        },
+        {
+          "expr": "sum(rate(http_requests_total{job=~\"$job\", status_code=~\"4..\"}[5m])) by (route)",
+          "legendFormat": "4xx - {{route}}"
+        }
+      ],
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } },
+      "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" } } }
+    },
+    {
+      "id": 6,
+      "title": "Request Latency (p50, p95, p99)",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 9 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.50, sum(rate(http_request_duration_seconds_bucket{job=~\"$job\"}[5m])) by (le, route))",
+          "legendFormat": "p50 - {{route}}"
+        },
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job=~\"$job\"}[5m])) by (le, route))",
+          "legendFormat": "p95 - {{route}}"
+        },
+        {
+          "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{job=~\"$job\"}[5m])) by (le, route))",
+          "legendFormat": "p99 - {{route}}"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "s" } },
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+    },
+    {
+      "id": 18,
+      "title": "Latency Heatmap",
+      "type": "heatmap",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 9 },
+      "targets": [
+        {
+          "expr": "sum(rate(http_request_duration_seconds_bucket{job=~\"$job\"}[5m])) by (le)",
+          "legendFormat": "{{le}}"
+        }
+      ],
+      "options": { "calculate": false, "showValue": "auto" },
+      "fieldConfig": { "defaults": { "unit": "s" } }
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 17 },
+      "id": 101,
+      "panels": [],
+      "title": "Node.js Internals",
+      "type": "row"
+    },
+    {
+      "id": 10,
+      "title": "Event Loop Lag",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 18 },
+      "targets": [{"expr": "nodejs_eventloop_lag_p99_seconds{job=~\"$job\"}", "legendFormat": "p99"},
+        {"expr": "nodejs_eventloop_lag_p90_seconds{job=~\"$job\"}", "legendFormat": "p90"},
+        {"expr": "nodejs_eventloop_lag_p50_seconds{job=~\"$job\"}", "legendFormat": "p50"}
+      ],
+      "fieldConfig": { "defaults": { "unit": "s" } },
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+    },
+    {
+      "id": 12,
+      "title": "Garbage Collection Rate",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 18 },
+      "targets": [
+        {
+          "expr": "sum(rate(nodejs_gc_duration_seconds_count{job=~\"$job\"}[5m])) by (kind)",
+          "legendFormat": "{{kind}}"
+        }
+      ],
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+    },
+    {
+      "id": 20,
+      "title": "Heap Usage by Space",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 26 },
+      "targets": [
+        {
+          "expr": "sum(nodejs_heap_space_size_used_bytes{job=~\"$job\"}) by (space)",
+          "legendFormat": "{{space}}"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "bytes" } },
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" }, "content": "stacked" }
+    },
+    {
+      "id": 22,
+      "title": "Active Handles & Resources",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 26 },
+      "targets": [{"expr": "nodejs_active_handles_total{job=~\"$job\"}", "legendFormat": "Active Handles"},
+        {"expr": "nodejs_active_resources_total{job=~\"$job\"}", "legendFormat": "Active Resources"}
+      ],
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 34 },
+      "id": 102,
+      "panels": [],
+      "title": "Process & System Metrics",
+      "type": "row"
+    },
+    {
+      "id": 14,
+      "title": "CPU Usage",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 35 },
+      "targets": [
+        {
+          "expr": "sum(rate(process_cpu_seconds_total{job=~\"$job\"}[5m])) by (instance)",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "fieldConfig": { "defaults": { "unit": "percent" } },
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+    },
+    {
+      "id": 16,
+      "title": "Memory Usage",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 35 },
+      "targets": [{"expr": "process_resident_memory_bytes{job=~\"$job\"}", "legendFormat": "Resident"},
+        {"expr": "nodejs_heap_size_used_bytes{job=~\"$job\"}", "legendFormat": "Heap Used"},
+        {"expr": "nodejs_external_memory_bytes{job=~\"$job\"}", "legendFormat": "External"}
+      ],
+      "fieldConfig": { "defaults": { "unit": "bytes" } },
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+    },
+    {
+      "id": 24,
+      "title": "File Descriptors",
+      "type": "timeseries",
+      "datasource": { "uid": "${DS_PROMETHEUS}", "type": "prometheus" },
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 35 },
+      "targets": [{"expr": "process_open_fds{job=~\"$job\"}", "legendFormat": "Open FDs"},
+        {"expr": "process_max_fds{job=~\"$job\"}", "legendFormat": "Max FDs"}
+      ],
+      "options": { "tooltip": { "mode": "multi" }, "legend": { "displayMode": "list", "placement": "bottom" } }
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": ["nodejs", "backend", "detailed"],
+  "templating": {
+    "list": [
+      {
+        "current": {}, 
+        "hide": 2,
+        "name": "DS_PROMETHEUS",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": { "selected": true, "text": "backend", "value": "backend" },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Job",
+        "multi": true,
+        "name": "job",
+        "options": [],
+        "query": "label_values(up{job=~\"backend.*\"}, job)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Node.js Backend Monitoring (Detailed)",
+  "uid": "nodejs-backend-dashboard-detailed",
+  "version": 1
+}

@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: backend-servicemonitor
+  labels:
+    app: backend
+    release: prometheus-stack # This label is important for kube-prometheus-stack to discover this ServiceMonitor
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  endpoints:
+  - port: http-metrics
+    path: /metrics
+    interval: 15s
