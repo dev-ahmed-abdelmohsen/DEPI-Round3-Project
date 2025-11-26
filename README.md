@@ -1,6 +1,6 @@
 # SocialDev: A DevOps-Driven YouTube Channel Companion
 
-## 👥 Team Members
+## Team Members
 - Ahmed Abd Elmohsen - Team Leader
 - Eslam Nasser 
 - George Medhat 
@@ -14,10 +14,10 @@
 [Click here](https://drive.google.com/drive/folders/1aeULM9lA43SoK8bJTHFrGhPer631f2Z_?usp=sharing)
 
 ---
-## 📌 Project Idea
+## Project Idea
 A cloud-native application that helps users track their progress on YouTube channels. Users can input a channel URL, view its videos, mark them as watched, and take timestamped notes that can be exported.
 
-### 🚀 Core Features
+### Core Features
 - **Channel Video Listing:** Fetches and displays all videos from a given YouTube channel.
 - **Progress Tracking:** Mark videos as "watched" to keep track of your progress.
 - **Video Notes:** Take and save notes for each video, with the ability to link them to specific timestamps.
@@ -38,13 +38,13 @@ It’s built using **DevOps tools** for automation and scalability:
 The goal is to apply DevOps culture to build, deploy, and monitor a scalable web application.
 
 ---
-## 🗂️ Project Plan
+## Project Plan
 
 ### **Week 1 – Build & Containerize**
 - [x] Develop application modules
 - [x] Create Dockerfile for each service
 - [x] Write docker-compose.yml for local development
-- [ ] Implement CI pipeline (GitHub Actions)
+- [x] Implement CI pipeline (GitHub Actions)
 
 ### **Week 2 – Provision Infrastructure**
 - [ ] Define Infrastructure
@@ -56,10 +56,10 @@ The goal is to apply DevOps culture to build, deploy, and monitor a scalable web
 
 ### **Week 4 – Monitor & Automate**
 - [x] Monitoring & Logging
-- [ ] CI/CD Enhancements
+- [x] CI/CD Enhancements
 
 ---
-## 📝 Individual Roles and Responsibilities
+## Individual Roles and Responsibilities
 
 | Member             | Role & Tasks                          |
 |--------------------|---------------------------------------|
@@ -72,7 +72,7 @@ The goal is to apply DevOps culture to build, deploy, and monitor a scalable web
 
 ---
 
-## 📚 Module Documentation
+## Module Documentation
 
 -   **[Frontend Service Readme](frontend/README.md)**: Instructions for setting up and running the frontend service locally.
 -   **[Backend Service Readme](backend/README.md)**: Instructions for setting up and running the backend service locally.
@@ -84,8 +84,12 @@ The goal is to apply DevOps culture to build, deploy, and monitor a scalable web
 
 ---
 
-## 📊 SonarCloud Quality Gate
+## SonarCloud Quality Gate
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=learnaholic-bit_DEPI-Round3-Project&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=learnaholic-bit_DEPI-Round3-Project)
 
 You can find the full analysis on [SonarCloud](https://sonarcloud.io/project/overview?id=learnaholic-bit_DEPI-Round3-Project).
+
+## Github Actions
+
+Github Actions Runs are on the [Fork](https://github.com/learnaholic-bit/DEPI-Round3-Project/actions)
