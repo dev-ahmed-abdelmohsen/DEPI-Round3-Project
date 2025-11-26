@@ -60,7 +60,3 @@ frontend/.git/
 *.7z
 *.log
 .modified # from frontend/
-k8s/aws-auth-cm.yaml
-k8s/efs-csi-sa.yaml
-k8s/terraform.tfstate
-terraform/*

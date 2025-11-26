@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   frontend:
     build:
@@ -64,11 +62,13 @@ services:
   grafana:
     image: grafana/grafana
     ports:
-      - "3002:3000" # Map to 3002 to avoid conflict with frontend
+      - "3002:3000"
     volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
       - grafana-data:/var/lib/grafana
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin # You can change this password
+      - GF_SECURITY_ADMIN_PASSWORD=Password123!
     networks:
       - my-app-network
     depends_on:
