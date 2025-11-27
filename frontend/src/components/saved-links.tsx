@@ -23,6 +23,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { PlusCircle, Trash2, Edit, Copy } from "lucide-react";
 import Link from "next/link";
+import {useIsMobile} from '@/hooks/use-mobile';
 
 interface SavedLink {
   id: string;
@@ -36,6 +37,7 @@ const YOUTUBE_URL_REGEX =
 export function SavedLinks() {
   const storageKey = "savedVideoLinks";
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const [links, setLinks] = useState<SavedLink[]>(() => {
     try {
@@ -49,16 +51,12 @@ export function SavedLinks() {
   const [newLinkName, setNewLinkName] = useState("");
   const [newLinkUrl, setNewLinkUrl] = useState("");
   const [editingLink, setEditingLink] = useState<SavedLink | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    try {
-      const savedLinks = localStorage.getItem(storageKey);
-      if (savedLinks) {
-        setLinks(JSON.parse(savedLinks));
-      }
-    } catch (error) {
-      console.error("Failed to parse links from localStorage", error);
-    }
+    setIsClient(true);
+    const links = JSON.parse(localStorage.getItem(storageKey) || "[]");
+    setLinks(links);
   }, []);
 
   useEffect(() => {
@@ -131,6 +129,10 @@ export function SavedLinks() {
     navigator.clipboard.writeText(url);
     toast({ title: "Copied!", description: "Link copied to clipboard." });
   };
+
+  if (!isClient) {
+    return null; // Render nothing on the server
+  }
 
   return (
     <div className="w-full max-w-5xl mx-auto mt-16 space-y-8">

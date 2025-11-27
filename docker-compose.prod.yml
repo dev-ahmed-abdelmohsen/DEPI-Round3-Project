@@ -5,7 +5,8 @@ services:
       - "80:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_BASE_URL=http://backend:3001
+      - NEXT_PUBLIC_API_BASE_URL=http://api.socialdev.com
+      - API_BASE_URL_INTERNAL=http://backend:3001
     networks:
       - my-app-network
     restart: always
@@ -37,6 +38,46 @@ services:
       - my-app-network
     restart: always
 
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - my-app-network
+    depends_on:
+      - backend
+    restart: always
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+      - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD__FILE=/run/secrets/grafana_admin_password
+    networks:
+      - my-app-network
+    depends_on:
+      - prometheus
+    restart: always
+    secrets:
+      - grafana_admin_password
+
+
 networks:
   my-app-network:
     driver: bridge
+volumes:
+  grafana-data:
+
+secrets:
+  grafana_admin_password:
+    file: ./grafana_admin_password.txt
